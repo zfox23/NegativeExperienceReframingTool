@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@types/react-helmet": "^6.1.5",
+    "@types/styled-components": "^5.1.21",
+    "gatsby-plugin-google-gtag": "^4.6.0"
+  },
+  "devDependencies": {
+    "@types/helmet": "^4.0.0"
+  }
+}
