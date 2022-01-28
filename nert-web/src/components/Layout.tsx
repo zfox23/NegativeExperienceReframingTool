@@ -74,13 +74,13 @@ const layoutStyle = {
     "flexDirection": "column"
 };
 
-export default function Layout({ children }) {
+export default function Layout({ children, nofooter }) {
     return (
         <React.Fragment>
             <div style={layoutStyle as React.CSSProperties}>
                 <GlobalStyle />
                 {children}
-                <StyledFooter />
+                {nofooter ? null : <StyledFooter />}
             </div>
         </React.Fragment>
     )

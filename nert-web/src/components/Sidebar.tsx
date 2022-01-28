@@ -11,6 +11,7 @@ const Sidebar = ({ className, expanded, toggleExpanded}: { className?: string, e
             <div className={`sidebar__scrim ${expanded ? "sidebar__scrim--opaque" : "sidebar__scrim--transparent"}`} onClick={toggleExpanded} />
             <div className={`sidebar__mainContainer ${expanded ? "sidebar__expanded" : "sidebar__collapsed"}`}>
                 <Link to="/">NERT Home</Link>
+                <Link to="/new">New NERT Log</Link>
                 <Link to="/import-export">Log Import/Export</Link>
             </div>
         </div>

@@ -214,7 +214,7 @@ const About = ({ className }: { className?: string }) => {
             <h2>About NERT</h2>
             <p>Zach Fox created NERT based on psychological tools a therapist taught him which have helped him reframe countless negative experiences.</p>
             <p>His goal is to create therapeutic and mindfulness-based applications to help others through their own challenging times with a focus on user experience, accessibility, and data privacy.</p>
-            <p>Zach is not a licensed therapist. Please contact him <a href="https://twitter.com/valefox" target="_blank">on Twitter</a> if you have any suggestions, and please dial 911 if you are having a medical emergency.</p>
+            <p>Zach is not a licensed therapist, and NERT is not a replacement for a therapist. Please contact Zach <a href="https://twitter.com/valefox" target="_blank">on Twitter</a> if you have any suggestions, and please dial 911 if you are having a medical emergency.</p>
         </div>
     );
 }
