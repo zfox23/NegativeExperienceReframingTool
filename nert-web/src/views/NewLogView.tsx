@@ -68,6 +68,9 @@ header {
     &__form {
         flex: 1;
         margin: 0 240px 58px 0;
+        padding: 16px 0;
+        box-sizing: border-box;
+        max-width: 1200px;
     }
 
     &__bottom {

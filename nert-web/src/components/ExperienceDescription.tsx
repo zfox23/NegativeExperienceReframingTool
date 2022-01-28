@@ -15,10 +15,15 @@ const ExperienceDescription = ({ className, currentStep, userNegativeExperience,
             <input type="text" placeholder="My negative experience..." onChange={(e) => {
                 setUserNegativeExperience(e.target.value);
             }} />
-            <h3>Guidelines:</h3>
+            <h3>Guidelines</h3>
             <ul>
-                <li><strong>Be objective.</strong></li>
-                <li>Describe an event, leaving your thoughts and feelings aside.</li>
+                <li><strong>Be objective.</strong> Describe an event, leaving your thoughts and feelings aside as much as possible.</li>
+                <li><strong>Examples:</strong></li>
+                <ul>
+                    <li>My partner and I had our second fight of the week about doing the dishes.</li>
+                    <li>I lost all of my lives in Candy Crush and threw my phone across the room.</li>
+                    <li>I shared something about myself to a friend and they laughed at me.</li>
+                </ul>
             </ul>
         </div>
     )
@@ -41,6 +46,11 @@ input {
 }
 
 h3 {
-    margin: 0 0 8px 0;
+    margin: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0 0 0 32px;
 }
 `;

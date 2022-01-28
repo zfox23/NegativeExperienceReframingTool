@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StaticImage } from "gatsby-plugin-image";
 import styled from "styled-components";
-import { Button } from "../components/Button";
+import { Button, StyledButtonLink } from "../components/Button";
 import { Divider } from "../components/Divider";
 import Layout from "../components/Layout";
 import SEOHeader from "../components/SEOHeader";
@@ -47,7 +47,7 @@ const MainDetails = ({ className }: { className?: string }) => {
                     <p>Closely examining our thoughts and feelings after a negative experience can help us <strong>feel better</strong>.</p>
                     <p>With the NERT as your guide, learn to calm your mind, identify cognitive distortions, and <strong>achieve growth</strong>.</p>
                     <div className="mainInner__buttonContainer">
-                        <Button primary={true} borderless={true}>
+                        <StyledButtonLink to="/new" primary={true} borderless={true}>
                             <span>Create New NERT Log</span>
                             <img
                                     src={ArrowRightWhiteImage}
@@ -55,7 +55,7 @@ const MainDetails = ({ className }: { className?: string }) => {
                                     height={13}
                                     width={8}
                                     />
-                        </Button>
+                        </StyledButtonLink>
                         <p>Data remains privately on your device.</p>
                     </div>
                 </div>
@@ -147,7 +147,7 @@ const SixSteps = ({ className }: { className?: string }) => {
                     <li><strong>Reframe</strong> the thoughts.</li>
                     <li><strong>Recalibrate</strong> the mind.</li>
                 </ol>
-                <Button primary={true} borderless={true}>
+                <StyledButtonLink to="/new" primary={true} borderless={true}>
                     <span>Try Now</span>
                     <img
                             src={ArrowRightWhiteImage}
@@ -155,7 +155,7 @@ const SixSteps = ({ className }: { className?: string }) => {
                             height={13}
                             width={8}
                             />
-                </Button>
+                </StyledButtonLink>
             </div>
             <StaticImage
                 className="sixSteps__right"
@@ -175,6 +175,9 @@ justify-content: space-between;
 .sixSteps {
     &__left {
         max-width: 580px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
 
         button {
             margin: 16px 0 0 0;
