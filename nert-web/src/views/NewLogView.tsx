@@ -16,30 +16,56 @@ const ExperienceDescription = ({ className, currentStep }: { className?: string,
 const StyledExperienceDescription = styled(ExperienceDescription)`
 `;
 
-const FeelingPill = (props) => {
+const FeelingPill = ({className, style, userSelected, feelingName, feelingParent, amountFeelingBefore, onAddClicked, onUpdateClicked, onRemoveClicked}: {className?: string, style?: any, userSelected: Boolean, feelingName: string, feelingParent?: string, amountFeelingBefore?: number, onAddClicked?: any, onUpdateClicked?: any, onRemoveClicked?: any}) => {
     const [expanded, setExpanded] = useState(false);
-    const [amountFeelingBefore, setAmountFeelingBefore] = useState(0);
-    const feelingName = props.feelingObject.name;
+    const [amount, setAmount] = useState(0);
 
-    if (props.userSelected) {
+    React.useEffect(() => {
+        setAmount(amountFeelingBefore);
+    }, [amountFeelingBefore]);
+
+    if (userSelected) {
         return (
-            <div className={`${props.className} feelingPill__userSelected`} style={props.style}>
-                <button onClick={() => { props.onRemoveClicked(feelingName); }}>x</button>
-                <span>{feelingName}</span>
-                <span>({props.feelingObject.amountFeelingBefore}%)</span>
+            <div className={`${className}`} style={style}>
+                <div className="feelingPill__top" onClick={(e) => { setExpanded(!expanded); e.preventDefault(); }}>
+                    <button onClick={(e) => { setExpanded(!expanded); e.preventDefault(); }}>{expanded ? "-" : "+"}</button>
+                    <span>{feelingName} ({amountFeelingBefore}%)</span>
+                </div>
+                <div className={`feelingPill__bottom ${expanded ? "" : "displayNone"}`}>
+                    <p>Intensity: {amountFeelingBefore}%</p>
+                    <input type="range" defaultValue={amountFeelingBefore} min={0} max={100} step={5} onChange={(e) => {
+                        onUpdateClicked(feelingName, parseInt(e.target.value));
+                    }} />
+                    <button onClick={(e) => {
+                        setExpanded(false);
+                        e.preventDefault();
+                    }}>Update</button>
+                    <button onClick={(e) => {
+                        onRemoveClicked(feelingName);
+                        e.preventDefault();
+                    }}>Remove</button>
+                </div>
             </div>
         );
     } else {
         return (
-            <div className={`${props.className} feelingPill__notUserSelected`} style={props.style} >
+            <div className={`${className}`} style={style} >
                 <div className="feelingPill__top" onClick={(e) => { setExpanded(!expanded); e.preventDefault(); }}>
                     <button onClick={(e) => { setExpanded(!expanded); e.preventDefault(); }}>{expanded ? "-" : "+"}</button>
                     <span>{feelingName}</span>
                 </div>
                 <div className={`feelingPill__bottom ${expanded ? "" : "displayNone"}`}>
-                    <p>Intensity: {amountFeelingBefore}%</p>
-                    <input type="range" defaultValue={0} min={0} max={100} step={5} onChange={(e) => { setAmountFeelingBefore(parseInt(e.target.value)); }} />
-                    <button onClick={() => { props.onAddClicked(new UserFeeling({ name: feelingName, amountFeelingBefore: amountFeelingBefore })); }}>Add</button>
+                    <p>Intensity: {amount}%</p>
+                    <input type="range" defaultValue={amount} min={0} max={100} step={5} onChange={(e) => {
+                        setAmount(parseInt(e.target.value));
+                    }} />
+                    <button onClick={(e) => {
+                        onAddClicked(new UserFeeling({
+                            name: feelingName,
+                            amountFeelingBefore: amount
+                        }));
+                        e.preventDefault();
+                    }}>Add</button>
                 </div>
             </div>
         );
@@ -48,33 +74,29 @@ const FeelingPill = (props) => {
 const StyledFeelingPill = styled(FeelingPill)`
 display: flex;
 font-size: 16px;
-font-weight: ${props => props.feelingObject.parent ? "400" : "700"};
+font-weight: ${props => props.feelingParent ? "400" : "700"};
 padding: 12px 16px;
 border-radius: 8px;
 align-items: center;
 justify-content: center;
 gap: 4px;
-
-&.feelingPill {
-    &__notUserSelected {
-        flex-direction: column;
-    }
-    &__userSelected {
-        flex-direction: row;
-    }
-}
+flex-direction: column;
 
 .feelingPill {
     &__top {
         display: flex;
         width: 100%;
-        gap: 8px;
         cursor: pointer;
+        align-items: center;
 
         button {
+            text-align: left;
+            width: 16px;
+            height: 24px;
             background: transparent;
             border: none;
             cursor: pointer;
+            padding: 0;
         }
     }
 
@@ -97,12 +119,21 @@ gap: 4px;
 const InitialFeelingsList = ({ className, currentStep }: { className?: string, currentStep: NERTLogSteps }) => {
     const [userFeelingsList, setUserFeelingsList] = useState<UserFeeling[]>([]);
 
-    const onRemoveClicked = feelingName => {
-        setUserFeelingsList(userFeelingsList.filter(el => el.name !== feelingName));
-    }
-
     const onAddClicked = newUserFeeling => {
         setUserFeelingsList(userFeelingsList => [...userFeelingsList, newUserFeeling]);
+    }
+
+    const onUpdateClicked = (feelingName, amountFeelingBefore) => {
+        setUserFeelingsList(userFeelingsList.map(el => {
+            if (el.name === feelingName) {
+                el.amountFeelingBefore = amountFeelingBefore;
+            }
+            return el;
+        }));
+    }
+
+    const onRemoveClicked = feelingName => {
+        setUserFeelingsList(userFeelingsList.filter(el => el.name !== feelingName));
     }
 
     return (
@@ -117,9 +148,12 @@ const InitialFeelingsList = ({ className, currentStep }: { className?: string, c
                             return (
                                 <StyledFeelingPill
                                     key={node.name}
-                                    feelingObject={node}
+                                    feelingName={node.name}
+                                    feelingParent={feeling.feelingParent}
+                                    amountFeelingBefore={node.amountFeelingBefore}
                                     userSelected={true}
                                     style={{ "backgroundColor": feeling.pillColorHex }}
+                                    onUpdateClicked={onUpdateClicked}
                                     onRemoveClicked={onRemoveClicked}
                                 />
                             )
@@ -144,7 +178,9 @@ const InitialFeelingsList = ({ className, currentStep }: { className?: string, c
                                             return (
                                                 <StyledFeelingPill
                                                     key={node.name}
-                                                    feelingObject={node}
+                                                    feelingName={node.name}
+                                                    feelingParent={node.feelingParent}
+                                                    amountFeelingBefore={node.amountFeelingBefore}
                                                     userSelected={false}
                                                     style={{ "backgroundColor": node.pillColorHex }}
                                                     onAddClicked={onAddClicked}
@@ -182,6 +218,7 @@ h2 {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+        align-items: flex-start;
     }
 
     &__bottom {
@@ -199,40 +236,44 @@ h2 {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 4px;
+        align-items: flex-start;
     }
 }
 `;
 
 const NewLogView = ({ className, currentStep, setCurrentStep }: { className?: string, currentStep: NERTLogSteps, setCurrentStep: (number) => void }) => {
-
     return (
-        <main className={className}>
-            <h1>Step {currentStep + 1}</h1>
-            <form className="logView__form">
-                <ExperienceDescription currentStep={currentStep} />
-                <StyledInitialFeelingsList currentStep={currentStep} />
-            </form>
-            <div className="logView__bottom">
-                <Button primary={false} borderless={true} fontSize={18} disabled={currentStep <= NERTLogSteps.RecordNegativeExperience} onClick={(e) => {e.preventDefault(); setCurrentStep(Math.max(NERTLogSteps.RecordNegativeExperience, currentStep - 1)); }}>
-                    <img
-                        src={ArrowLeftBlackImage}
-                        alt='A black left arrow, designating "back"'
-                        height={13}
-                        width={8}
-                    />
-                    <span>Back</span>
-                </Button>
-                <Button primary={true} borderless={true} fontSize={18} disabled={currentStep >= NERTLogSteps.Completed - 1} onClick={(e) => {e.preventDefault(); setCurrentStep(Math.min(NERTLogSteps.Completed - 1, currentStep + 1)); }}>
-                    <span>Save &amp; Continue</span>
-                    <img
-                        src={ArrowRightWhiteImage}
-                        alt='A white right arrow, designating "continue"'
-                        height={13}
-                        width={8}
-                    />
-                </Button>
-            </div>
-        </main>
+        <div className={className}>
+            <header>
+                <h1>NERT Log · Step {currentStep + 1}/{NERTLogSteps.Completed + 1}</h1>
+            </header>
+            <main>
+                <form className="logView__form">
+                    <ExperienceDescription currentStep={currentStep} />
+                    <StyledInitialFeelingsList currentStep={currentStep} />
+                </form>
+                <div className="logView__bottom">
+                    <Button primary={false} borderless={true} fontSize={18} disabled={currentStep <= NERTLogSteps.RecordNegativeExperience} onClick={(e) => { e.preventDefault(); setCurrentStep(Math.max(NERTLogSteps.RecordNegativeExperience, currentStep - 1)); }}>
+                        <img
+                            src={ArrowLeftBlackImage}
+                            alt='A black left arrow, designating "back"'
+                            height={13}
+                            width={8}
+                        />
+                        <span>Back</span>
+                    </Button>
+                    <Button primary={true} borderless={true} fontSize={18} disabled={currentStep >= NERTLogSteps.Completed} onClick={(e) => { e.preventDefault(); setCurrentStep(Math.min(NERTLogSteps.Completed + 1, currentStep + 1)); }}>
+                        <span>Save &amp; Continue</span>
+                        <img
+                            src={ArrowRightWhiteImage}
+                            alt='A white right arrow, designating "continue"'
+                            height={13}
+                            width={8}
+                        />
+                    </Button>
+                </div>
+            </main>
+        </div>
     );
 }
 export const StyledNewLogView = styled(NewLogView)`
@@ -240,14 +281,18 @@ min-height: 100vh;
 display: flex;
 flex-direction: column;
 
-h1 {
-    width: 100%;
-    max-width: 800px;
-    font-size: 44px;
-    line-height: 44px;
-    font-weight: 100;
+header {
     margin: 5px 48px 16px 48px;
-    padding: 0;
+
+    h1 {
+        width: 100%;
+        max-width: 800px;
+        font-size: 32px;
+        line-height: 32px;
+        font-weight: 100;
+        padding: 0;
+        margin: 0;
+    }
 }
 
 .logView {

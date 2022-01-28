@@ -8,7 +8,6 @@ import { StyledNewLogView } from "../views/NewLogView";
 
 const NewLogPage = ({className}: {className?: string}) => {
     const [sidebarExpanded, setSidebarExpanded] = useState(false);
-    // const [currentStep, setCurrentStep] = useState<NERTLogSteps>(NERTLogSteps.RecordNegativeExperience);
     const [currentStep, setCurrentStep] = useState<NERTLogSteps>(NERTLogSteps.IdentifyNegativeFeelings);
 
     return (

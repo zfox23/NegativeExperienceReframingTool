@@ -74,7 +74,7 @@ const layoutStyle = {
     "flexDirection": "column"
 };
 
-export default function Layout({ children, nofooter }) {
+export default function Layout({ children, nofooter }: { children: any, nofooter?: Boolean }) {
     return (
         <React.Fragment>
             <div style={layoutStyle as React.CSSProperties}>

@@ -17,7 +17,7 @@ export class UserFeeling {
     amountFeelingBefore?: number;
     amountFeelingAfter?: number;
 
-    constructor({name, amountFeelingBefore, amountFeelingAfter}: {name: string, amountFeelingBefore?: number, amountFeelingAfter?: number}) {
+    constructor({name, amountFeelingBefore = 0, amountFeelingAfter = 0}: {name: string, amountFeelingBefore?: number, amountFeelingAfter?: number}) {
         this.name = name;
         this.amountFeelingBefore = amountFeelingBefore;
         this.amountFeelingAfter = amountFeelingAfter;
@@ -25,12 +25,12 @@ export class UserFeeling {
 }
 
 export class Feeling extends UserFeeling {
-    parent?: string;
+    feelingParent?: string;
     pillColorHex: string;
 
-    constructor({name, parent, pillColorHex, amountFeelingBefore, amountFeelingAfter}: {name: string, parent: string, pillColorHex: string, amountFeelingBefore?: number, amountFeelingAfter?: number}) {
+    constructor({name, feelingParent, pillColorHex, amountFeelingBefore = 0, amountFeelingAfter = 0}: {name: string, feelingParent: string, pillColorHex: string, amountFeelingBefore?: number, amountFeelingAfter?: number}) {
         super({name, amountFeelingBefore, amountFeelingAfter});
-        this.parent = parent;
+        this.feelingParent = feelingParent;
         this.pillColorHex = pillColorHex;
     }
 }
@@ -39,233 +39,233 @@ export const feelingsTable = [
     [
         new Feeling({
             name: "Sad",
-            parent: null,
+            feelingParent: null,
             pillColorHex: "#7f9bf0"
         }),
         new Feeling({
             name: "Depressed",
-            parent: "Sad",
+            feelingParent: "Sad",
             pillColorHex: "#7f9bf0"
         }),
         new Feeling({
             name: "Down",
-            parent: "Sad",
+            feelingParent: "Sad",
             pillColorHex: "#7f9bf0"
         }),
         new Feeling({
             name: "Unhappy",
-            parent: "Sad",
+            feelingParent: "Sad",
             pillColorHex: "#7f9bf0"
         }),
     ],
     [
         new Feeling({
             name: "Hopeless",
-            parent: null,
+            feelingParent: null,
             pillColorHex: "#9194f2"
         }),
         new Feeling({
             name: "Discouraged",
-            parent: "Hopeless",
+            feelingParent: "Hopeless",
             pillColorHex: "#9194f2"
         }),
         new Feeling({
             name: "Pessimistic",
-            parent: "Hopeless",
+            feelingParent: "Hopeless",
             pillColorHex: "#9194f2"
         }),
         new Feeling({
             name: "Despairing",
-            parent: "Hopeless",
+            feelingParent: "Hopeless",
             pillColorHex: "#9194f2"
         }),
     ],
     [
         new Feeling({
             name: "Lonely",
-            parent: null,
+            feelingParent: null,
             pillColorHex: "#967ff0"
         }),
         new Feeling({
             name: "Unloved",
-            parent: "Lonely",
+            feelingParent: "Lonely",
             pillColorHex: "#967ff0"
         }),
         new Feeling({
             name: "Unwanted",
-            parent: "Lonely",
+            feelingParent: "Lonely",
             pillColorHex: "#967ff0"
         }),
         new Feeling({
             name: "Rejected",
-            parent: "Lonely",
+            feelingParent: "Lonely",
             pillColorHex: "#967ff0"
         }),
         new Feeling({
             name: "Alone",
-            parent: "Lonely",
+            feelingParent: "Lonely",
             pillColorHex: "#967ff0"
         }),
         new Feeling({
             name: "Abandoned",
-            parent: "Lonely",
+            feelingParent: "Lonely",
             pillColorHex: "#967ff0"
         }),
     ],
     [
         new Feeling({
             name: "Inferior",
-            parent: null,
+            feelingParent: null,
             pillColorHex: "#aa6dee"
         }),
         new Feeling({
             name: "Worthless",
-            parent: "Inferior",
+            feelingParent: "Inferior",
             pillColorHex: "#aa6dee"
         }),
         new Feeling({
             name: "Inadequate",
-            parent: "Inferior",
+            feelingParent: "Inferior",
             pillColorHex: "#aa6dee"
         }),
         new Feeling({
             name: "Defective",
-            parent: "Inferior",
+            feelingParent: "Inferior",
             pillColorHex: "#aa6dee"
         }),
         new Feeling({
             name: "Incompetent",
-            parent: "Inferior",
+            feelingParent: "Inferior",
             pillColorHex: "#aa6dee"
         }),
     ],
     [
         new Feeling({
             name: "Embarrassed",
-            parent: null,
+            feelingParent: null,
             pillColorHex: "#e76dee"
         }),
         new Feeling({
             name: "Foolish",
-            parent: "Embarrassed",
+            feelingParent: "Embarrassed",
             pillColorHex: "#e76dee"
         }),
         new Feeling({
             name: "Humiliated",
-            parent: "Embarrassed",
+            feelingParent: "Embarrassed",
             pillColorHex: "#e76dee"
         }),
         new Feeling({
             name: "Self-conscious",
-            parent: "Embarrassed",
+            feelingParent: "Embarrassed",
             pillColorHex: "#e76dee"
         }),
     ],
     [
         new Feeling({
             name: "Guilty",
-            parent: null,
+            feelingParent: null,
             pillColorHex: "#e7a2ce"
         }),
         new Feeling({
             name: "Remorseful",
-            parent: "Guilty",
+            feelingParent: "Guilty",
             pillColorHex: "#e7a2ce"
         }),
         new Feeling({
             name: "Ashamed",
-            parent: "Guilty",
+            feelingParent: "Guilty",
             pillColorHex: "#e7a2ce"
         }),
         new Feeling({
             name: "Bad",
-            parent: "Guilty",
+            feelingParent: "Guilty",
             pillColorHex: "#e7a2ce"
         }),
     ],
     [
         new Feeling({
             name: "Anxious",
-            parent: null,
+            feelingParent: null,
             pillColorHex: "#f07fa1"
         }),
         new Feeling({
             name: "Worried",
-            parent: "Anxious",
+            feelingParent: "Anxious",
             pillColorHex: "#f07fa1"
         }),
         new Feeling({
             name: "Panicked",
-            parent: "Anxious",
+            feelingParent: "Anxious",
             pillColorHex: "#f07fa1"
         }),
         new Feeling({
             name: "Nervous",
-            parent: "Anxious",
+            feelingParent: "Anxious",
             pillColorHex: "#f07fa1"
         }),
         new Feeling({
             name: "Scared",
-            parent: "Anxious",
+            feelingParent: "Anxious",
             pillColorHex: "#f07fa1"
         }),
     ],
     [
         new Feeling({
             name: "Frustrated",
-            parent: null,
+            feelingParent: null,
             pillColorHex: "#ee6d6d"
         }),
         new Feeling({
             name: "Stuck",
-            parent: "Frustrated",
+            feelingParent: "Frustrated",
             pillColorHex: "#ee6d6d"
         }),
         new Feeling({
             name: "Thwarted",
-            parent: "Frustrated",
+            feelingParent: "Frustrated",
             pillColorHex: "#ee6d6d"
         }),
         new Feeling({
             name: "Defeated",
-            parent: "Frustrated",
+            feelingParent: "Frustrated",
             pillColorHex: "#ee6d6d"
         }),
     ],
     [
         new Feeling({
             name: "Angry",
-            parent: null,
+            feelingParent: null,
             pillColorHex: "#ee966d"
         }),
         new Feeling({
             name: "Mad",
-            parent: "Angry",
+            feelingParent: "Angry",
             pillColorHex: "#ee966d"
         }),
         new Feeling({
             name: "Resentful",
-            parent: "Angry",
+            feelingParent: "Angry",
             pillColorHex: "#ee966d"
         }),
         new Feeling({
             name: "Annoyed",
-            parent: "Angry",
+            feelingParent: "Angry",
             pillColorHex: "#ee966d"
         }),
         new Feeling({
             name: "Irritated",
-            parent: "Angry",
+            feelingParent: "Angry",
             pillColorHex: "#ee966d"
         }),
         new Feeling({
             name: "Upset",
-            parent: "Angry",
+            feelingParent: "Angry",
             pillColorHex: "#ee966d"
         }),
         new Feeling({
             name: "Furious",
-            parent: "Angry",
+            feelingParent: "Angry",
             pillColorHex: "#ee966d"
         }),
     ],
